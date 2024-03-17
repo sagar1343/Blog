@@ -1,3 +1,45 @@
 {% extends 'base.html' %} {% block content %}
-<h1 class="font-bold text-6xl">Home Page</h1>
+<div class="grid grid-cols-1 lg:grid-cols-4">
+  <aside>
+    <ul
+      class="menu menu-horizontal grid grid-cols-2 items-center md:grid-cols-3 lg:grid-cols-1 lg:w-56 bg-base-200">
+      {% for category in categorys %}
+      <li><a>{{category.title}}</a></li>
+      {% endfor %}
+    </ul>
+  </aside>
+  <main class="mt-5 lg:mt-0 lg:col-span-3">
+    <table class="table">
+      <tbody>
+        {% for blog in blogs %}
+        <tr>
+          <td>
+            <div class="flex items-center gap-3">
+              <div class="avatar">
+                <div class="mask mask-squircle w-12 h-12">
+                  <img
+                    src="/media/{{blog.author.profile_image}}"
+                    alt="Avatar Tailwind CSS Component" />
+                </div>
+              </div>
+              <div>
+                <div class="font-bold">{{blog.title}}</div>
+                <div class="text-sm opacity-50">{{blog.author}}</div>
+              </div>
+            </div>
+          </td>
+          <td class="hidden md:block">
+            {{blog.description}}
+            <br />
+            <span class="badge badge-ghost badge-sm">{{blog.category}}</span>
+          </td>
+          <th>
+            <button class="btn btn-ghost btn-xs">details</button>
+          </th>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </main>
+</div>
 {% endblock content %}

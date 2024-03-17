@@ -3,11 +3,14 @@ from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User
 from .forms import RegistrationForm, LoginForm
 from django.contrib import messages
+from .models import BlogPost, Category
 # Create your views here.
 
 
 def home(request):
-    return render(request=request, template_name='home.html')
+    categorys = list(Category.objects.all())
+    blogs = list(BlogPost.objects.all())
+    return render(request=request, template_name='home.html', context={'blogs': blogs, 'categorys': categorys})
 
 
 def yourposts(request):
@@ -16,6 +19,7 @@ def yourposts(request):
 
 def logout_user(request):
     logout(request=request)
+    messages.success(request=request, message="Logout successfully")
     return redirect(to='home')
 
 

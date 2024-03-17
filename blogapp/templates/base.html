@@ -15,7 +15,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <nav class="fixed top-0 left-0 right-0">
+    <nav class="fixed top-0 left-0 right-0 z-10">
       <div class="navbar bg-base-100">
         <div class="navbar-start">
           <div class="dropdown">
@@ -73,7 +73,7 @@
         </div>
       </div>
     </nav>
-    <main class="mx-5 mt-16 md:mx-10">
+    <div class="mx-5 mt-16 md:mx-10">
       {% if messages %}
       <ul class="messages fixed bottom-4  right-4 ">
           {% for message in messages %}
@@ -88,7 +88,7 @@
           {% endfor %}
       </ul>
       {% endif %}
-      {% block content %}{% endblock %}</main>
+      {% block content %}{% endblock %}</div>
       <script src= "{% static "script.js" %}"></script>
   </body>
 </html>

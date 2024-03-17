@@ -20,10 +20,10 @@ class Category(models.Model):
 
 
 class BlogPost(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=50)
     author = models.ForeignKey(to=Author, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now=True)
-    description = models.CharField(max_length=255)
+    description = models.CharField(max_length=200)
     content = CKEditor5Field()
     read_by = models.PositiveIntegerField(default=0)
     category = models.ForeignKey(
