@@ -2,11 +2,12 @@ from typing import Any
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import Author
 
 
 class RegistrationForm(UserCreationForm):
     class Meta:
-        model = User
+        model = Author
         fields = ['username', 'password1', 'password2']
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
