@@ -1,20 +1,27 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout, login, authenticate
-from django.contrib.auth.models import User
 from .forms import RegistrationForm, LoginForm
 from django.contrib import messages
-from .models import BlogPost, Category
-# Create your views here.
+from .models import BlogPost, Category, Author
 
 
 def home(request):
-    categorys = list(Category.objects.all())
-    blogs = list(BlogPost.objects.all())
-    return render(request=request, template_name='home.html', context={'blogs': blogs, 'categorys': categorys})
+    category_id = request.GET.get('category')
+    if category_id:
+        blogs = BlogPost.objects.filter(category__id=category_id)
+        if not blogs.exists():
+            messages.info(
+                request=request, message="No post in this category ")
+    else:
+        blogs = BlogPost.objects.all()
+    categorys = Category.objects.all()
+    return render(request=request, template_name='home.html', context={'blogs': list(blogs), 'categorys': list(categorys)})
 
 
 def yourposts(request):
-    return render(request=request, template_name='yourpost.html')
+    user_blogs = BlogPost.objects.filter(author=request.user)
+    total_posts = user_blogs.count()
+    return render(request=request, template_name='yourpost.html', context={'user_blogs': list(user_blogs), 'total_posts': total_posts})
 
 
 def logout_user(request):
@@ -43,7 +50,8 @@ def login_user(request):
 
 
 def profile(request):
-    return render(request=request, template_name='profile.html')
+    profile_image = Author.objects.get(pk=request.user.id).profile_image
+    return render(request=request, template_name='profile.html', context={'profile_image': profile_image})
 
 
 def register(request):
@@ -66,3 +74,6 @@ def register(request):
     else:
         form = RegistrationForm()
         return render(request=request, template_name='register.html', context={'form': form})
+
+def createBlog(request):
+    return render(request=request,template_name='')

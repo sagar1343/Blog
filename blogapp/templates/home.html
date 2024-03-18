@@ -3,14 +3,18 @@
   <aside>
     <ul
       class="menu menu-horizontal grid grid-cols-2 items-center md:grid-cols-3 lg:grid-cols-1 lg:w-56 bg-base-200">
+      <li><a href={% url 'home' %}>All</a></li>
       {% for category in categorys %}
-      <li><a>{{category.title}}</a></li>
+      <li id="category{{category.id}}"><a href="?category={{category.id}}">{{category.title}}</a></li>
       {% endfor %}
     </ul>
   </aside>
   <main class="mt-5 lg:mt-0 lg:col-span-3">
     <table class="table">
       <tbody>
+        {% if not blogs %}
+        <h1 class="text-4xl font-bold fixed text-zinc-300">No blog found here</h1>
+        {% else %}
         {% for blog in blogs %}
         <tr>
           <td>
@@ -24,7 +28,7 @@
               </div>
               <div>
                 <div class="font-bold">{{blog.title}}</div>
-                <div class="text-sm opacity-50">{{blog.author}}</div>
+                <div class="text-sm opacity-50">@{{blog.author}}</div>
               </div>
             </div>
           </td>
@@ -38,6 +42,8 @@
           </th>
         </tr>
         {% endfor %}
+        {% endif %}
+        
       </tbody>
     </table>
   </main>

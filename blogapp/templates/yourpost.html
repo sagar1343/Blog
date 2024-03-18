@@ -1,3 +1,39 @@
 {% extends "base.html" %} {% block content %}
-<h1 class="text-6xl font-bold">Your Posts</h1>
+
+<div class="mt-20 flex justify-end items-center">
+  <span class="badge badge-ghost badge-lg rounded-md"
+    >Total posts: {{total_posts}}</span
+  >
+</div>
+<table class="table">
+  <tbody>
+    {% for blog in user_blogs %}
+    <tr>
+      <td>
+        <div class="flex items-center gap-3">
+          <div class="avatar">
+            <div class="mask mask-squircle w-12 h-12">
+              <img
+                src="/media/{{blog.author.profile_image}}"
+                alt="Avatar Tailwind CSS Component" />
+            </div>
+          </div>
+          <div>
+            <div class="font-bold">{{blog.title}}</div>
+            <div class="text-sm opacity-50">@{{blog.author}}</div>
+          </div>
+        </div>
+      </td>
+      <td class="hidden md:block">
+        {{blog.description}}
+        <br />
+        <span class="badge badge-ghost badge-sm">{{blog.category}}</span>
+      </td>
+      <th>
+        <button class="btn btn-ghost btn-xs">details</button>
+      </th>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock %}
