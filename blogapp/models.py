@@ -1,15 +1,12 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django_ckeditor_5.fields import CKEditor5Field
 # Create your models here.
 
 
-class Author(User):
+class Author(AbstractUser):
     profile_image = models.ImageField(
-        upload_to='profile_images', default='default__person.jpg')
-
-    def __str__(self):
-        return self.username
+        upload_to='profile_image/', default='profile_image/default__person.jpg')
 
 
 class Category(models.Model):
@@ -21,10 +18,11 @@ class Category(models.Model):
 
 class BlogPost(models.Model):
     title = models.CharField(max_length=50)
-    author = models.ForeignKey(to=Author, on_delete=models.CASCADE)
+    author = models.ForeignKey(
+        to=Author, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now=True)
     description = models.CharField(max_length=200)
-    content = CKEditor5Field()
+    content = CKEditor5Field('Content', config_name='extends', blank=True)
     read_by = models.PositiveIntegerField(default=0)
     category = models.ForeignKey(
         to=Category, on_delete=models.CASCADE)

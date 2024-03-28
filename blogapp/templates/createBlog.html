@@ -1,12 +1,11 @@
 {% extends "base.html" %} {% block content %}
 <div class="w-100 h-[36rem] flex justify-center items-center">
     <fieldset class="w-30 md:w-1/3 p-2 border-2 shadow-md rounded-lg font-semi-bold ">
-        <legend class="text-4xl font-semibold text-info text-center">Register Here</legend>
+        <legend class="text-4xl font-semibold text-info text-center">Create Blog</legend>
         <form
-        action={% url "register-page" %}
+        action={% url "createBlog" %}
         method="POST"
-        enctype="multipart/form-data"
-        class="flex flex-col items-center"
+        class="flex flex-col justify-stretch"
         >
         {% csrf_token %}
         {% for field in form %}
@@ -20,7 +19,7 @@
                 {% endfor %}
             {% endif %}    
         {% endfor %}
-        <button class="my-3 self-center btn btn-info text-white">Register</button>
+        <button class="my-3 self-center btn btn-info text-white">Create</button>
         </form>
     </fieldset>
 </div>

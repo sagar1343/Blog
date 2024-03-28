@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout, login, authenticate
-from .forms import RegistrationForm, LoginForm
+from .forms import RegistrationForm, LoginForm, CreateBlogForm
 from django.contrib import messages
 from .models import BlogPost, Category, Author
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
@@ -18,10 +19,12 @@ def home(request):
     return render(request=request, template_name='home.html', context={'blogs': list(blogs), 'categorys': list(categorys)})
 
 
+@login_required
 def yourposts(request):
-    user_blogs = BlogPost.objects.filter(author=request.user)
-    total_posts = user_blogs.count()
-    return render(request=request, template_name='yourpost.html', context={'user_blogs': list(user_blogs), 'total_posts': total_posts})
+    user = request.user
+    blogs = user.blogpost_set.all()
+    total_post = blogs.count()
+    return render(request=request, template_name='yourpost.html', context={'blogs': list(blogs), 'total_posts': total_post})
 
 
 def logout_user(request):
@@ -50,8 +53,8 @@ def login_user(request):
 
 
 def profile(request):
-    profile_image = Author.objects.get(pk=request.user.id).profile_image
-    return render(request=request, template_name='profile.html', context={'profile_image': profile_image})
+    author = request.user
+    return render(request=request, template_name='profile.html', context={'author': author})
 
 
 def register(request):
@@ -75,5 +78,8 @@ def register(request):
         form = RegistrationForm()
         return render(request=request, template_name='register.html', context={'form': form})
 
+
+@login_required()
 def createBlog(request):
-    return render(request=request,template_name='')
+    form = CreateBlogForm()
+    return render(request=request, template_name='createBlog.html', context={'form': form})

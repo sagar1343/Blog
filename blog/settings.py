@@ -130,6 +130,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+AUTH_USER_MODEL = 'blogapp.Author'
+
+LOGIN_URL = 'login-page'
 # ckeditor-5
 customColorPalette = [
     {
