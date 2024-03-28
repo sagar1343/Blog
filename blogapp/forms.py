@@ -2,7 +2,7 @@ from typing import Any
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .models import Author, BlogPost
-from django_ckeditor_5.widgets import CKEditor5Widget
+from ckeditor.widgets import CKEditorWidget
 
 
 class RegistrationForm(UserCreationForm):
@@ -50,8 +50,8 @@ class CreateBlogForm(forms.ModelForm):
         model = BlogPost
         fields = ['title', 'description', 'content', 'category']
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control input input-bordered w-full max-w-xs my-2', 'placeholder': 'Title'}),
-            'description': forms.TextInput(attrs={'class': 'form-control input input-bordered w-full max-w-xs my-2', 'placeholder': 'Description'}),
-            'category': forms.Select(attrs={'class': 'form-control select select-bordered w-full max-w-xs my-2'}),
-            'content':   CKEditor5Widget(config_name='list', attrs={'class': 'form-control input input-bordered  my-2', 'placeholder': 'Content'})
+            'title': forms.TextInput(attrs={'class': 'form-control input input-bordered w-full  my-2', 'placeholder': 'Title'}),
+            'description': forms.TextInput(attrs={'class': 'form-control input input-bordered w-full  my-2', 'placeholder': 'Description'}),
+            'category': forms.Select(attrs={'class': 'form-control select select-bordered w-full  my-2'}),
+            'content': CKEditorWidget(config_name='default', attrs={'class': 'form-control input input-bordered  my-2', 'placeholder': 'Content'})
         }

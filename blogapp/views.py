@@ -1,9 +1,9 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout, login, authenticate
-from .forms import RegistrationForm, LoginForm, CreateBlogForm
 from django.contrib import messages
-from .models import BlogPost, Category, Author
-from django.contrib.auth.decorators import login_required
+from .forms import RegistrationForm, LoginForm, CreateBlogForm
+from .models import BlogPost, Category
 
 
 def home(request):
@@ -69,7 +69,7 @@ def register(request):
             login(request=request, user=user)
             messages.success(
                 request=request, message="Profile created successfully")
-            return redirect('home')
+            return redirect(to='home')
         else:
             messages.error(request=request, message="Invalid Form")
             return render(request=request, template_name='register.html', context={'form': form})
@@ -81,5 +81,15 @@ def register(request):
 
 @login_required()
 def createBlog(request):
-    form = CreateBlogForm()
+    if request.method == 'POST':
+        form = CreateBlogForm(data=request.POST)
+        if form.is_valid():
+            blog_post = form.save(commit=False)
+            blog_post.author = request.user
+            blog_post.save()
+            return redirect(to='home')
+        else:
+            messages.warning(request=request, message="Invalid post")
+    else:
+        form = CreateBlogForm()
     return render(request=request, template_name='createBlog.html', context={'form': form})

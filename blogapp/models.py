@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django_ckeditor_5.fields import CKEditor5Field
+from ckeditor.fields import RichTextField
 # Create your models here.
 
 
@@ -22,10 +22,10 @@ class BlogPost(models.Model):
         to=Author, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now=True)
     description = models.CharField(max_length=200)
-    content = CKEditor5Field('Content', config_name='extends', blank=True)
+    content = RichTextField(null=True, blank=True)
     read_by = models.PositiveIntegerField(default=0)
     category = models.ForeignKey(
-        to=Category, on_delete=models.CASCADE)
+        to=Category, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.title
