@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-#m7ahyj_7gc^y$s+8((uz_0#x2i^r=062!ojj^c67u#$d612xv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
 
 
 # Application definition
@@ -70,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "blog.wsgi.application"
+WSGI_APPLICATION = "blog.wsgi.app"
 
 
 # Database
@@ -133,6 +133,3 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = 'blogapp.Author'
 
 LOGIN_URL = 'login-page'
-
-ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
-WSGI_APPLICATION = 'blog.wsgi.app'
