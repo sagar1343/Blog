@@ -133,3 +133,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = 'blogapp.Author'
 
 LOGIN_URL = 'login-page'
+
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app']
+WSGI_APPLICATION = 'blog.wsgi.app'

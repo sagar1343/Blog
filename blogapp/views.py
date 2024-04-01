@@ -16,7 +16,7 @@ def home(request):
     else:
         blogs = BlogPost.objects.all()
     categorys = Category.objects.all()
-    return render(request=request, template_name='home.html', context={'blogs': list(blogs), 'categorys': list(categorys)})
+    return render(request=request, template_name='home.html', context={'blogs': list(blogs.order_by('-date')), 'categorys': list(categorys)})
 
 
 @login_required
